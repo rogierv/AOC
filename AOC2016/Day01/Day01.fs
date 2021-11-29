@@ -68,7 +68,6 @@ module Part2 =
                                   PathTaken = x.PathTaken @ WalkPath (fst x.Coordinates, snd x.Coordinates) 'N' steps  }
                 | _          -> { Coordinates = (fst x.Coordinates - steps, snd x.Coordinates); Facing = 'S'; 
                                   PathTaken = x.PathTaken @ WalkPath (fst x.Coordinates, snd x.Coordinates) 'S' steps  }
-                { x with PathTaken = x.PathTaken @ WalkPath (fst x.Coordinates, snd x.Coordinates) 'S' steps  }
             instructions |> Array.fold folder { Coordinates = (0,0); Facing = 'N'; PathTaken = [] }
         destination.PathTaken
 
