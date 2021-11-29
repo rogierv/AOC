@@ -1,37 +1,38 @@
-﻿type Direction =
-    | R
-    | L
-    | U
-    | D
+﻿#time
+#r "nuget: morelinq"
 
-let parseDirection d =
-    match d with
-    | 'R' -> R
-    | 'L' -> L
-    | 'U' -> U
-    | 'D' -> D
+let inline charToInt c = int c - int '0'
 
-let folder (x: (int * int) list) (y: string) =
-    let direction = y.[0] |> parseDirection
-    let d = y.[1..] |> int                  // distance
-    let c = x |> List.last                  // current
-    match direction with
-    | R -> x @ ([0..d] |> List.map (fun y -> (fst c, snd c + y)))
-    | L -> x @ ([0..d] |> List.map (fun y -> (fst c, snd c - y)))
-    | U -> x @ ([0..d] |> List.map (fun y -> (fst c + y, snd c)))
-    | D -> x @ ([0..d] |> List.map (fun y -> (fst c - y, snd c)))
+let rec digitsNeverDecrease (i:int) : bool =
+    let s = i |> string |> Seq.toList
+    match s with
+    | [_] -> true
+    | h :: t -> if (h |> charToInt) > (t.[0] |> charToInt) 
+                then false 
+                else digitsNeverDecrease (new System.String (t |> List.toArray) |> int)
 
-let getPath wire = wire |> Array.toList |> List.fold folder [(0, 0)]
+let rec hasTwoAdjacentDigits (i:int) : bool =
+    let s = i |> string |> Seq.toList
+    match s with
+    | [_] -> false
+    | h :: t -> if (h |> charToInt) = (t.[0] |> charToInt) 
+                then true 
+                else hasTwoAdjacentDigits (new System.String (t |> List.toArray) |> int)
 
-let getIntersections wire1 wire2 =
-    let wire1Path = wire1 |> getPath
-    let wire2Path = wire2 |> getPath
-    Set.intersect (Set.ofList wire1Path) (Set.ofList wire2Path) |> Set.toList
+[246515..739105] |> List.filter (fun x -> digitsNeverDecrease x && hasTwoAdjacentDigits x) |> List.length
 
-let wire1 = [|"R8";"U5";"L5";"D3"|]
-let wire2 = [|"U7";"R6";"D4";"L4"|]
+let group xs =
+    let folder x = function
+        | [] -> [[x]]
+        | (h::t)::ta when h = x -> (x::h::t)::ta
+        | acc -> [x]::acc
+    Seq.foldBack folder xs []
 
-wire1 |> getPath
-wire2 |> getPath
+let findAdjacentDigits (i:int) =
+    let c = i |> string |> group |> List.filter (fun x -> x.Length <> 1) |> List.sortBy (fun x -> x.[0]) |> List.last
+    c.Length = 2
 
-getIntersections wire1 wire2 |> List.tail |> List.map (fun coor -> fst coor + snd coor) |> List.min
+
+
+
+3342114 |> findAdjacentDigits
