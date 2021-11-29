@@ -8,6 +8,11 @@
 
   <ItemGroup>
     <Compile Include="Utils.fs" />
+    <Content Include="AOC2016\Day01\Input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="AOC2016\Day01\Day01.fs" />
+    <Compile Include="AOC2016\Day01\Day01Tests.fs" />
     <Content Include="AOC2019\Day01\Input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

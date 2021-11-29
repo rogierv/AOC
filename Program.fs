@@ -1,6 +1,8 @@
 ﻿//open Day04.Parser
-open Day04
+open AOC2016.Day01
 
-let result = [246515..739105] |> Part2.Solution
+let input = "AOC2016/Day01/Input.txt"
+
+let result = input |> Parser.parse |> Part2.Solution
 
 printf $"{result}"
