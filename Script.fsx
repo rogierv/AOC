@@ -19,3 +19,22 @@ let x =
     |> Seq.fold (fun x y -> x + (fst y |> string)) ""
 
 x
+
+let isAlpha c = System.Char.IsLetter c
+
+let shift n c  = 
+  let b = 
+    match isAlpha c with
+    | true  -> (( int c - 97 + n ) % 26 ) + 97
+    | false -> 
+      match c with 
+      | '-' -> 32
+      | _   -> int c
+  char b
+          
+let encode xs n = 
+  xs |> Seq.map (shift n) 
+     |> Seq.toArray
+     |> fun e -> new string (e)
+
+encode "abc-def" 401
