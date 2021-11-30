@@ -1,9 +1,21 @@
 ﻿#time
 
-let IsValidTriangle s1 s2 s3 = (s1 + s2 > s3) && (s1 + s3 > s2) && (s2 + s3 > s1)
+let a1 = ("not-a-real-room-404[oarel]").Split([|']';'['|], 4)
 
-IsValidTriangle 5 10 15
+let a2 = a1.[0]
+let split = a2.LastIndexOf '-'
 
-let sample = [[1;2;3];[3;4;5];[5;6;7];[1;2;3];[3;4;5];[5;6;7];[1;2;3];[3;4;5];[5;6;7]]
+let checksum = a1.[1]
+let encryptedName = a2.Substring(0,(split)).Replace("-", "")
+let sectorId = a2.Substring(split + 1)
 
-sample |> List.splitInto (sample.Length / 3) |> List.map (fun x -> List.transpose x) |> List.concat |> List.filter (fun x -> IsValidTriangle x.[0] x.[1] x.[2]) |> List.length
+
+let x =
+    encryptedName
+    |> Seq.toList
+    |> Seq.countBy id
+    |> Seq.sortBy (fun x -> -snd x, fst x)
+    |> Seq.take 5
+    |> Seq.fold (fun x y -> x + (fst y |> string)) ""
+
+x

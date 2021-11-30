@@ -1,8 +1,8 @@
-﻿//open Day04.Parser
-open AOC2016.Day03
+﻿open AOC2016.Day04
 
-let input = "AOC2016/Day03/Input.txt"
+let input = "AOC2016/Day04/Input.txt"
 
-let result = input |> Parser.parse |> Part2.Solution
+let result = input |> Parser.parse |> Part1.Solution
 
 printf $"{result}"
+

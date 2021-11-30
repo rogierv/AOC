@@ -22,6 +22,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Compile Include="AOC2016\Day03\Day03.fs" />
+    <Compile Include="AOC2016\Day04\Day04.fs" />
+    <Compile Include="AOC2016\Day04\Day04Tests.fs" />
+    <Content Include="AOC2016\Day04\Input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="AOC2019\Day01\Input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -45,12 +50,7 @@
   </ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
-	  <PackageReference Include="morelinq" Version="3.3.2" />
-	  <PackageReference Include="MoreLinq.Source.MoreEnumerable.GroupAdjacent" Version="1.0.2">
-	    <PrivateAssets>all</PrivateAssets>
-	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	  </PackageReference>
+	  <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
 	  <PackageReference Include="xunit" Version="2.4.1" />
 	  <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" />
 	  <PackageReference Include="FsUnit.xUnit" Version="4.1.0" />
