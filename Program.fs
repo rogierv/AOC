@@ -1,6 +1,6 @@
-﻿open AOC2016.Day04
+﻿open AOC2021.Day01
 
-let input = "AOC2016/Day04/Input.txt"
+let input = "AOC2021/Day01/Input.txt"
 
 let result = input |> Parser.parse |> Part2.Solution
 
