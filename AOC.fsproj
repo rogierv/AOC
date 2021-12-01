@@ -44,6 +44,11 @@
     <Compile Include="AOC2019\Day03\Day03Tests.fs" />
     <Compile Include="AOC2019\Day04\Day04.fs" />
     <Compile Include="AOC2019\Day04\Day04Tests.fs" />
+    <Content Include="AOC2021\Day02\Input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="AOC2021\Day02\Day02.fs" />
+    <Compile Include="AOC2021\Day02\Day02Tests.fs" />
     <Content Include="AOC2021\Day01\Input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

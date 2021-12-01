@@ -1,15 +1,5 @@
 ﻿module AOC2021.Day01
 
-open System
-open System.IO
-
-module Parser =
-    let parse input =
-        input
-        |> File.ReadAllLines
-        |> Array.toList
-        |> List.map Int32.Parse
-
 module Part1 =
     let scanDepth measurements =
         measurements

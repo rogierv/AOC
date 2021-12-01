@@ -1,14 +1,11 @@
 ﻿namespace Utils
 
+open System
 open System.IO
 
 module IO =
-    let readLines filePath = File.ReadLines(filePath) |> Seq.head
+    let readLines path = File.ReadLines(path) |> Seq.head
 
-    let readAllLines filePath : string list =
-        File.ReadAllLines(filePath) |> Array.toList
+    let readAllLines path : string list = File.ReadAllLines(path) |> Array.toList
 
-    let readAllLinesToInt (filePath: string) : int list =
-        filePath
-        |> readAllLines
-        |> List.map System.Int32.Parse
+    let readAllLinesToInt path : int list = path |> readAllLines |> List.map Int32.Parse
