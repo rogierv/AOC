@@ -1,4 +1,4 @@
-﻿module Day04Tests
+﻿module AOC2019.Day04Tests
 
 open FsUnit.Xunit
 open Xunit

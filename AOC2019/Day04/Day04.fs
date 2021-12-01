@@ -1,4 +1,4 @@
-﻿module Day04
+﻿module AOC2019.Day04
 
 module Part1 =
     let inline charToInt c = int c - int '0'

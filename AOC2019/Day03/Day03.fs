@@ -1,4 +1,4 @@
-﻿module Day03
+﻿module AOC2019.Day03
 
 open System
 

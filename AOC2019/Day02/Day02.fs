@@ -1,4 +1,4 @@
-﻿module Day02
+﻿module AOC2019.Day02
 
 open System
 open System.IO
