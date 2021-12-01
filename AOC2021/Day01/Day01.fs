@@ -4,7 +4,8 @@ module Part1 =
     let scanDepth measurements =
         measurements
         |> List.pairwise
-        |> List.fold (fun x xs -> if (fst xs < snd xs) then x + 1 else x) 0
+        |> List.filter (fun (a, b) -> b > a)
+        |> List.length
 
     let Solution input = input |> scanDepth
 
