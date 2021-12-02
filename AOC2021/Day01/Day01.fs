@@ -1,11 +1,12 @@
 ﻿module AOC2021.Day01
 
+open Utils
+
 module Part1 =
     let scanDepth measurements =
         measurements
         |> List.pairwise
-        |> List.filter (fun (a, b) -> b > a)
-        |> List.length
+        |> List.count (fun (a, b) -> b > a)
 
     let Solution input = input |> scanDepth
 
