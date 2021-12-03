@@ -5,9 +5,7 @@ open System.IO
 
 module IO =
     let readLines path = File.ReadLines(path) |> Seq.head
-
     let readAllLines path = File.ReadAllLines(path) |> Array.toList
-
     let readAllLinesToInt path = path |> readAllLines |> List.map int
 
 module List =
@@ -24,3 +22,4 @@ module Seq =
 module Convert =
     let inline charToInt c = int c - int '0'
     let inline intToChar i = char i + char '0'
+    let binaryToInt b = Convert.ToInt32(b, 2)

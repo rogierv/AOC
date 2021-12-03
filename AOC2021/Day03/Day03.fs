@@ -3,36 +3,59 @@
 open Utils.Convert
 
 module Part1 =
-    let gammaRate list = 
-        list 
+    let gammaRate list =
+        list
         |> List.map (fun x -> x |> Seq.toList |> List.map charToInt)
         |> List.transpose
-        |> List.map (fun x -> if (x |> List.sum) > (x.Length / 2) then 1 else 0)
-        |> List.fold (fun x y -> x + (y |> string)) ""
+        |> List.map
+            (fun x ->
+                if (x |> List.sum) > (x.Length / 2) then 1
+                else 0)
+        |> List.map string
+        |> List.fold (+) ""
 
-    let findOpposite (bit:string) =
-        bit |> String.map (fun x -> if x = '0' then '1' else '0')
+    let findOpposite bit =
+        bit
+        |> String.map (fun x -> if x = '0' then '1' else '0')
 
-    let toInt binary = System.Convert.ToInt32(binary, 2)
     let epsilonRate gammaRate = gammaRate |> findOpposite
-    let calc input = (gammaRate input |> toInt) * (epsilonRate (gammaRate input) |> toInt)
 
-    let solution (input:string list) = input |> calc
+    let solution(input: string list) =
+        (gammaRate input |> binaryToInt) * (epsilonRate (gammaRate input) |> binaryToInt)
 
 module Part2 =
-    open Part1
-    let transpose (l:string list) = l |> List.map (fun x -> x |> Seq.toList |> List.map charToInt) |> List.transpose    
-    
-    let findMostBit x = x |> List.countBy id |> List.sortBy (fun (a, _) -> -a) |> List.maxBy (fun (_,b) -> b) |> fst |> intToChar
-    let findLeastBit (x:int list) = x |> List.countBy id |> List.sortBy (fun (a, _) -> a) |> List.minBy (fun (_,b) -> b) |> fst |> intToChar
-    
-    let filterOnBit pos bit (l:string list) = l |> List.filter (fun x -> x.[pos] = bit)
-    
-    let filter i l = filterOnBit i ((transpose l).[i] |> findMostBit) l
-    let filterLeast i l = filterOnBit i ((transpose l).[i] |> findLeastBit) l
+    let mostCommonValue list =
+        list
+        |> List.countBy id
+        |> List.sortBy (fun (a, _) -> -a)
+        |> List.maxBy (fun (_, b) -> b)
+        |> fst
+        |> intToChar
 
-    let solution (input:string list) =
-        let steps = [0..(input[0].Length-1)] 
-        let oxygenGeneratorRating = steps |> List.fold (fun x y -> filter y x) input |> List.head |> toInt
-        let CO2ScrubberRating = steps |> List.fold (fun x y -> filterLeast y x) input |> List.head |> toInt
+    let leastCommonValue list =
+        list
+        |> List.countBy id
+        |> List.sortBy (fun (a, _) -> a)
+        |> List.minBy (fun (_, b) -> b)
+        |> fst
+        |> intToChar
+
+    let filterOnBit pos (l: string list) bit = l |> List.filter (fun x -> x.[pos] = bit)
+
+    let transpose(l: string list) =
+        l
+        |> List.map (fun x -> x |> Seq.toList |> List.map charToInt)
+        |> List.transpose
+
+    let filterBy func i list = (transpose list).[i] |> func |> filterOnBit i list
+
+    let calculateRating func (input: string list) =
+        [0 .. (input.[0].Length - 1)]
+        |> List.fold (fun x y -> func y x) input
+        |> List.head
+        |> binaryToInt
+
+    let solution(input: string list) =
+        let oxygenGeneratorRating = calculateRating (filterBy mostCommonValue) input
+        let CO2ScrubberRating = calculateRating (filterBy leastCommonValue) input
         oxygenGeneratorRating * CO2ScrubberRating

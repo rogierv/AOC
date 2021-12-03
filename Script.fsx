@@ -18,12 +18,11 @@ let filterOnBit pos bit (l:string list) = l |> List.filter (fun x -> x.[pos] = b
 let filter i l = filterOnBit i ((transpose l).[i] |> findMostBit) l
 let filterLeast i l = filterOnBit i ((transpose l).[i] |> findLeastBit) l
 
-let oxygenGeneratorRating = 
-    for i in [0..4] do example <- filter i example
-    example[0]
+0b00100 * 0b10100
 
-let CO2ScrubberRating = 
-    for i in [0..4] do example <- filterLeast i example
-    example[0]
+let x = byte 10100  * byte 10100
+10110
+System.Convert.ToInt32(x)
+
 
 let oxygenGeneratorRatingFold = [0..4] |> List.fold (fun x y -> filter y x) example
