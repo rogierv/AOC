@@ -22,6 +22,7 @@ module Part1 =
 module Part2 =
     open Part1
     let transpose (l:string list) = l |> List.map (fun x -> x |> Seq.toList |> List.map charToInt) |> List.transpose    
+    
     let findMostBit x = x |> List.countBy id |> List.sortBy (fun (a, _) -> -a) |> List.maxBy (fun (_,b) -> b) |> fst |> intToChar
     let findLeastBit (x:int list) = x |> List.countBy id |> List.sortBy (fun (a, _) -> a) |> List.minBy (fun (_,b) -> b) |> fst |> intToChar
     
@@ -31,8 +32,7 @@ module Part2 =
     let filterLeast i l = filterOnBit i ((transpose l).[i] |> findLeastBit) l
 
     let solution (input:string list) =
-        let mutable first = input
-        let mutable second = input
-        for i in [0..(input[0].Length-1)] do first <- filter i first
-        for i in [0..(input[0].Length-1)] do second <- filterLeast i second
-        (first.[0] |> toInt) * (second.[0] |> toInt)
+        let steps = [0..(input[0].Length-1)] 
+        let oxygenGeneratorRating = steps |> List.fold (fun x y -> filter y x) input |> List.head |> toInt
+        let CO2ScrubberRating = steps |> List.fold (fun x y -> filterLeast y x) input |> List.head |> toInt
+        oxygenGeneratorRating * CO2ScrubberRating
