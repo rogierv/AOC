@@ -1,20 +1,27 @@
 ﻿#time
-#r "nuget: FSharpx.Collections"
 
-open FSharpx.Collections
+let inline charToInt c = int c - int '0'
+let inline intToChar i = char i + char '0'
 
-[0..10] |> List.mapIf (fun x -> x % 2 = 0) (fun x -> x + 1)
+let mutable example = ["00100";"11110";"10110";"10111";"10101";"01111";"00111";"11100";"10000";"11001";"00010";"01010"]
 
-[0..10] |> List.skip 5
+let transpose (l:string list) = l |> List.map (fun x -> x |> Seq.toList |> List.map charToInt) |> List.transpose
 
-[0;5;70;6;7;8] |> List.split (fun x -> x = 7)
+let findMostBit x = x |> List.countBy id |> List.sortBy (fun (a, _) -> a) |> List.maxBy (fun (_,b) -> b) |> fst |> intToChar
+let findLeastBit (x:int list) = x |> List.countBy id |> List.sortBy (fun (a, _) -> a) |> List.minBy (fun (_,b) -> b) |> fst |> intToChar
 
-List.transpose [['a'..'d'];['a'..'d']]
 
-[0..10] |> List.groupNeighboursBy (fun x -> x > 5 && x <= 7)
+[0;1] |> List.countBy id
 
-let x = DList.singleton 5 |> DList.conj 3
+let filterOnBit pos bit (l:string list) = l |> List.filter (fun x -> x.[pos] = bit)
 
-x |> DList.isEmpty
+let filter i l = filterOnBit i ((transpose l).[i] |> findMostBit) l
+let filterLeast i l = filterOnBit i ((transpose l).[i] |> findLeastBit) l
 
-let t = (0, 1, 2)
+let oxygenGeneratorRating = 
+    for i in [0..4] do example <- filter i example
+    example[0]
+
+let CO2ScrubberRating = 
+    for i in [0..4] do example <- filterLeast i example
+    example[0]

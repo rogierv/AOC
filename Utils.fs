@@ -20,3 +20,7 @@ module Seq =
         Seq.indexed
         >> Seq.filter (fun (i, e) -> f i e)
         >> Seq.map snd
+
+module Convert =
+    let inline charToInt c = int c - int '0'
+    let inline intToChar i = char i + char '0'

@@ -9,8 +9,8 @@ module Parser =
         let dir = 
             match split.[0] with
             | "down" -> Down
-            | "up" -> Up
-            | _ -> Forward
+            | "up"   -> Up
+            | _      -> Forward
         { Direction = dir; Value = split.[1] |> int}
 
 module Part1 =
@@ -20,8 +20,8 @@ module Part1 =
         let i = parse instruction
         let (hor, ver) = pos
         match i.Direction with
-        | Down -> (hor, ver + i.Value)
-        | Up -> (hor, ver - i.Value)
+        | Down    -> (hor, ver + i.Value)
+        | Up      -> (hor, ver - i.Value)
         | Forward -> (fst pos + i.Value, ver)
 
     let destination instructions = instructions |> List.fold nextPosition (0, 0)
@@ -37,8 +37,8 @@ module Part2 =
         let i = parse instruction
         let (hor, ver, aim) = pos
         match i.Direction with
-        | Down -> (hor, ver, aim + i.Value)
-        | Up -> (hor, ver, aim - i.Value)
+        | Down    -> (hor, ver, aim + i.Value)
+        | Up      -> (hor, ver, aim - i.Value)
         | Forward -> (hor + i.Value, ver + (i.Value * aim), aim)
 
     let destination instructions = instructions |> List.fold nextPosition (0, 0, 0)

@@ -1,7 +1,7 @@
-﻿open AOC2021.Day02
+﻿open AOC2021.Day03
 open Utils.IO
 
-let input = "AOC2021/Day02/Input.txt"
+let input = "AOC2021/Day03/Input.txt"
 
 let result = input |> readAllLines |> Part2.solution
 
