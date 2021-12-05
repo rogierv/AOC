@@ -1,10 +1,9 @@
-﻿open AOC2021.Day04
+﻿open AOC2021.Day05
 open Utils.IO
 open Parser
 
-let input = "AOC2021/Day04/Input.txt"
-let inputLines = input |> readAllLines
+let input = "AOC2021/Day05/Input.txt"
 
-let result = Part2.solution (inputLines |> parseDrawnNumbers) (inputLines |> parseCards)
+let result = input |> readAllLines |> parser |> Part2.solution
 
 printf $"{result}"
