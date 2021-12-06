@@ -1,28 +1,21 @@
 ﻿#time
 
-#r "nuget: FParsec"
-
-open FParsec
-
-let test p str =
-    match run p str with
-    | Success(result, _, _)   -> printfn "Success: %A" result
-    | Failure(errorMsg, _, _) -> printfn "Failure: %s" errorMsg
-
-let ws = spaces
-let str s = ws >>. pstring s .>> ws
-let tuple: Parser<(int * int), unit> = pint32 .>> pchar ',' .>>. pint32
-let parser = tuple .>> str "->" .>>. tuple
-
-test parser "541,808 -> 108,808"
-
-let parse str =
-    match run parser str with
-    | Success(result, _, _) -> result
-    | Failure(_) -> failwith "Not Parsed"
+let example = [3;4;3;1;2] 
+let input = [4;3;3;5;4;1;2;1;3;1;1;1;1;1;2;4;1;3;3;1;1;1;1;2;3;1;1;1;4;1;1;2;1;2;2;1;1;1;1;1;5;1;1;2;1;1;1;1;1;1;1;1;1;3;1;1;1;1;1;1;1;1;5;1;4;2;1;1;2;1;3;1;1;2;2;1;1;1;1;1;1;1;1;1;1;4;1;3;2;2;3;1;1;1;4;1;1;1;1;5;1;1;1;5;1;1;3;1;1;2;4;1;1;3;2;4;1;1;1;1;1;5;5;1;1;1;1;1;1;4;1;1;1;3;2;1;1;5;1;1;1;1;1;1;1;5;4;1;5;1;3;4;1;1;1;1;2;1;2;1;1;1;2;2;1;2;3;5;1;1;1;1;3;5;1;1;1;2;1;1;4;1;1;5;1;4;1;2;1;3;1;5;1;4;3;1;3;2;1;1;1;2;2;1;1;1;1;4;5;1;1;1;1;1;3;1;3;4;1;1;4;1;1;3;1;3;1;1;4;5;4;3;2;5;1;1;1;1;1;1;2;1;5;2;5;3;1;1;1;1;1;3;1;1;1;1;5;1;2;1;2;1;1;1;1;2;1;1;1;1;1;1;1;3;3;1;1;5;1;3;5;5;1;1;1;2;1;2;1;5;1;1;1;1;2;1;1;1;2;1]
 
 
-parse "541,808 -> 108,808"
+let nextDay (arr:int64[]) =
+    let newFish = arr.[0]
+    let newArray = Array.append (arr |> Array.tail) [|0|]
+    if newFish > 0 then
+        newArray.[6] <- newArray.[6] + newFish
+        newArray.[8] <- newFish
+    newArray
+    
+let createArray l =
+    let arr = [| for i in [0..8] -> 0L |]
+    l |> List.iter (fun fish -> arr.[fish] <- arr.[fish] + 1L)
+    arr
 
-let number:Parser<int32, unit> = pint32 .>> ws
-run (many number) "57  7  8 38 31"
+let s = input |> createArray
+[0..(256-1)] |> List.fold (fun x _ -> x |> nextDay ) s |> Array.sum
