@@ -1,9 +1,9 @@
-﻿open AOC2021.Day06
+﻿open AOC2021.Day07
 open Utils.IO
 open Parser
 
-let input = "AOC2021/Day06/Input.txt"
+let input = "AOC2021/Day07/Input.txt"
 
-let result = input |> readLines |> parse |> Part2.solution
+let result = input |> readLines |> parse |> Part1.solution
 
 printf $"{result}"
