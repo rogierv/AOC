@@ -11,12 +11,14 @@ module Part1 =
     type num = int // to get the max value
 
     let calculateCheapestOutcome f input =
+        let avg = input |> Array.map float |> Array.average |> System.Math.Ceiling |> int
         let rec calc prevCost y =
             let currentCost = f input y
+            let step = if (prevCost - currentCost) > 0 then -1 else 1
             match prevCost - currentCost with
-            | d when d > 0 -> calc currentCost (y + 1)
+            | d when d > 0 -> calc currentCost (y + step)
             | _ -> prevCost
-        input |> Array.min |> calc num.MaxValue
+        calc num.MaxValue avg
 
     let solution = calculateCheapestOutcome constantRate
 
