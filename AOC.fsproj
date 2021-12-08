@@ -69,14 +69,14 @@
     <Content Include="AOC2021\Day06\Input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Compile Include="AOC2021\Day08\Day08.fs" />
-    <Compile Include="AOC2021\Day08\Day08Tests.fs" />
-    <Content Include="AOC2021\Day08\Input.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Compile Include="AOC2021\Day07\Day07.fs" />
     <Compile Include="AOC2021\Day07\Day07Tests.fs" />
     <Content Include="AOC2021\Day07\Input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="AOC2021\Day08\Day08.fs" />
+    <Compile Include="AOC2021\Day08\Day08Tests.fs" />
+    <Content Include="AOC2021\Day08\Input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="AOC2021\Day01\Input.txt">
