@@ -3,67 +3,80 @@
 #r "nuget: FSharpPlus"
 open FSharpPlus
 
-let o = ("be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe").Split '|' |> Array.tail |> Array.head
-let digits = o.Split ' ' |> Array.filter (fun x -> x <> "")
-//digits |> Array.fold (fun acc x -> if x.Length = 2 || x.Length = 4 || x.Length = 3 || x.Length = 7 then acc + 1 else acc) 0
-
 open System.Collections.Generic
 
-//let dict = new Dictionary<char, char>()
-//['a'..'g'] |> List.map (fun x -> dict.Add(x, '_'))
+let inline charToInt c = int c - int '0'
 
-//let encode (word:string) (dict:Dictionary<char, char>) =
-//    if word.Length = 2 then dict.['c'] <- word.[0]; dict.['f'] <- word.[1]
-//    if word.Length = 3 then dict.['a'] <- word.[0]; dict.['c'] <- word.[1]; dict.['f'] <- word.[2]
-//    if word.Length = 4 then dict.['b'] <- word.[0]; dict.['c'] <- word.[1]; dict.['d'] <- word.[2]; dict.['f'] <- word.[2]
+let array2DFold folder (state:'State) (source:'T[,]) =
+    source
+    |> ( Seq.cast<'T> >> Seq.fold folder state ) 
 
-//encode "ab" dict
-
-
-
-
-let x = set ['a';'b']
-"au" |> Set.ofSeq |> Set.union (set ['a';'b'])
-
-let countDuplicates s1 s2 =
-    s1 |> Set.fold (fun acc x -> if Set.contains x s2 then acc + 1 else acc) 0
-
-//"aubc" |> countDuplicates "ab"
-
-let encode (word:string) (d:Dictionary<int, char Set>) =
-    let wordChars = word |> Set.ofSeq
-    let value = match word.Length with
-                | 2 -> d.[1] <- d.[1] |> Set.union wordChars; 1
-                | 3 -> d.[7] <- d.[7] |> Set.union wordChars; 7
-                | 4 -> d.[4] <- d.[4] |> Set.union wordChars; 4
-                | 7 -> d.[8] <- d.[8] |> Set.union wordChars; 8
-                | 5 -> if (d.[1] |> countDuplicates wordChars = 2) then 3 else
-                       if (d.[4] |> countDuplicates wordChars = 3) then 5 else 6 
-                | 6 -> if (d.[1] |> countDuplicates wordChars = 1) then 6 else
-                       if (d.[4] |> countDuplicates wordChars = 4) then 9 else 0
-    (d, value)
-
-let dict = new Dictionary<int, char Set>()
-[0; 1; 2; 3; 4; 5; 6; 7; 8; 9] |> List.map (fun x -> dict.Add(x, Set.empty))
-let solve = new Dictionary<string, int>();
-
-let words = "acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab cdfeb fcadb cdfeb cdbaf".Split " "
+let input = [|"2199943210";
+            "3987894921";
+            "9856789892";
+            "8767896789";
+            "9899965678"|]
 
 
 
+let heightMap = input |> Array.map (fun x -> x |> Seq.toArray |> Array.map charToInt) |> array2D
+heightMap[0,0]
 
-let encodeList (words:string[]) =
-    let dict = new Dictionary<int, char Set>()
-    let solve = new Dictionary<string, int>();
-    [0; 1; 2; 3; 4; 5; 6; 7; 8; 9] |> List.map (fun x -> dict.Add(x, Set.empty)) |> ignore
-    [2; 3; 4; 7; 5; 6]
-    |> List.map
-        (fun step ->
-            words
-            |> Array.map
-                (fun word ->
-                    if word.Length = step && (fst (solve.TryGetValue word) = false) then
-                        solve.Add(word, (snd (encode word dict))))) |> ignore
-    solve
+let findAdjacent pos (map:int[,]) =
+    let h = Array2D.length1 map - 1
+    let v = Array2D.length2 map - 1
+    let (x,y) = pos
+    match (x,y) with
+    | (0,0) -> [(x+1,y);(x,y+1)]
+    | (x,y) when x = h && y = v -> [(x-1,y);(x,y-1)]
+    | (0,y) when y = v ->  [(x+1,y);(x,y-1)]
+    | (x,0) when x = h -> [(x-1,y);(x,y+1)]
+    | (0,_) -> [(x+1,y);(x,y+1);(x,y-1)]
+    | (_,0) -> [(x-1,y);(x+1,y);(x,y+1)] 
+    | (x,_) when x = h -> [(x-1,y);(x,y+1);(x,y-1)]
+    | (_,y) when y = v -> [(x+1,y);(x-1,y);(x,y-1)] 
+    | _ -> [(x-1,y);(x+1,y);(x,y-1);(x,y+1)]
 
-encodeList words
+
+let rec flood pos v (map:int[,]) =
+    let getNeighbors = findAdjacent pos map
+    if (map[fst pos, snd pos] < 9) then (Array2D.set map (fst pos) (snd pos) v)
+    getNeighbors |> List.iter (fun p -> if map[fst p, snd p] < 9 then flood p v map)
+    
+flood (0,0) 11 heightMap
+heightMap
+
+let floodMap (map:int[,]) = 
+    let mutable v = 10
+    Array2D.iteri (fun ri ci x -> if x < 9 then flood (ri, ci) v map; v <- v + 1) map
+    map
+
+floodMap heightMap
+    
+let findSizeBasin (v:int) (map:int[,]) = array2DFold (fun acc x -> if x = v then acc + 1 else acc) 0 map
+
+
+let findThreeLargestBasins (map:int[,]) =
+    let maxValue = array2DFold (fun acc x -> if x > acc then x else acc) 10 map
+    let l = [10..maxValue] |> List.map (fun x -> findSizeBasin x map)
+    l |> List.sortDescending |> List.take 3
+
+findThreeLargestBasins heightMap |> List.fold (*) 1
+
+//heightMap
+
+//let getLowestPositionsOfNeighbors (pos:(int*int) list) (map:int[,]) =
+//    pos |> List.map (fun x -> map.[fst x, snd x]) |> List.min
+
+//getLowestPositionsOfNeighbors [(3, 9); (1, 9); (2, 8)] heightMap
+
+//heightMap[2,9]
+//findAdjacent (2,9) heightMap
+
+
+
+//let y = Array2D.mapi (fun ri ci x -> if (x < (getLowestPositionsOfNeighbors (findAdjacent (ri, ci) heightMap) heightMap)) then (x+1) else 0 ) heightMap |> array2dFold (fun acc x -> acc + x) 0
+
+
+
+//Array2D.mapi (fun ri ci x -> (ri, ci)) heightMap

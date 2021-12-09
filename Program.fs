@@ -1,9 +1,9 @@
-﻿open AOC2021.Day08
+﻿open AOC2021.Day09
 open Utils.IO
 open Parser
 
-let input = "AOC2021/Day08/Input.txt"
+let input = "AOC2021/Day09/Input.txt"
 
-let result = input |> readAllLines |> List.map (fun x -> x |> Part2.solution) |> List.sum
+let result = input |> readAllLines |> Part2.solution
 
 printf $"{result}"

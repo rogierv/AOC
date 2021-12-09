@@ -14,8 +14,7 @@ module Part2 =
     open Parser
     open System.Collections.Generic
 
-    let countDuplicates s1 s2 =
-        s1 |> Set.fold (fun acc x -> if Set.contains x s2 then acc + 1 else acc) 0
+    let countDuplicates (s1:char Set) (s2:char Set) = s1.Count + s2.Count - (Set.union s1 s2 |> Set.count)
 
     let encode (word:string) (d:Dictionary<int, char Set>) =
         let wordChars = word |> Set.ofSeq
