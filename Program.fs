@@ -1,9 +1,15 @@
-﻿open AOC2021.Day09
+﻿open AOC2021.Day10
 open Utils.IO
-open Parser
 
-let input = "AOC2021/Day09/Input.txt"
+let input = "AOC2021/Day10/Input.txt"
 
-let result = input |> readAllLines |> Part2.solution
+let result = 
+    input 
+    |> readAllLines 
+    |> List.map (fun x -> Part2.solution x)
+    |> List.filter (fun x -> x <> 0)
+    |> List.sort
 
-printf $"{result}"
+let middle = result.Length / 2
+
+printf $"{result[middle]}"

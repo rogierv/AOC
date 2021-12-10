@@ -84,6 +84,16 @@
     <Content Include="AOC2021\Day09\Input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Compile Include="AOC2021\Day10\Day10.fs" />
+    <Compile Include="AOC2021\Day10\Day10Tests.fs" />
+    <Content Include="AOC2021\Day10\Input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="AOC2021\Day11\Day11.fs" />
+    <Compile Include="AOC2021\Day11\Day11Tests.fs" />
+    <Content Include="AOC2021\Day11\Input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="AOC2021\Day01\Input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
