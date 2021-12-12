@@ -35,4 +35,4 @@ let test7() = Part1.solution "<{([([[(<>()){}]>(<<{{"
 
 [<Fact>]
 let test8() = Part2.solution "[({(<(())[]>[[{[]{<()<>>"
-            |> should equal 288957
+            |> should equal 288957L

@@ -23,3 +23,8 @@ module Convert =
     let inline charToInt c = int c - int '0'
     let inline intToChar i = char i + char '0'
     let binaryToInt b = Convert.ToInt32(b, 2)
+
+module Array2D =
+    let inline fold folder (state:'State) (source:'T[,]) =
+        source
+        |> (Seq.cast<'T> >> Seq.fold folder state ) 
