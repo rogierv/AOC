@@ -104,6 +104,21 @@
     <Content Include="AOC2021\Day13\Input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="AOC2021\Day14\Input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="AOC2021\Day14\Day14.fs" />
+    <Compile Include="AOC2021\Day14\Day14Tests.fs" />
+    <Content Include="AOC2021\Day15\Input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="AOC2021\Day16\Day16.fs" />
+    <Compile Include="AOC2021\Day16\Day16Tests.fs" />
+    <Content Include="AOC2021\Day16\Input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="AOC2021\Day17\Day17.fs" />
+    <Compile Include="AOC2021\Day17\Day17Tests.fs" />
     <Content Include="AOC2021\Day01\Input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -115,6 +130,7 @@
 
 	<ItemGroup>
 	  <PackageReference Include="FParsec" Version="1.1.1" />
+	  <PackageReference Include="FSharpPlus" Version="1.2.2" />
 	  <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
 	  <PackageReference Include="xunit" Version="2.4.1" />
 	  <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" />
